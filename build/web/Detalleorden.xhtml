@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Menu Administrador</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <h:outputStylesheet library="css" name="sweetalert.css"/>
+        <h:outputScript library="js" name="sweetalert.min.js"/>
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+
+
+        <h:form>
+            <p:growl id="messages"/>
+
+            <p:menubar>
+                <p:menuitem value="Productos" icon=" ui-icon-contact" url="ProductoCompra.xhtml" />
+                <p:menuitem value="Ordenes de compra" icon="ui-icon-suitcase" url="Detalleorden.xhtml"/>
+                <p:menuitem value="Cerrar sesion" icon="ui-icon-locked" actionListener="#{beanlogin.cerrarsesion}"/>
+            </p:menubar>   
+        </h:form>
+
+        <h:form id="piform">
+            <p:growl id="growl" showDetail="true" life="4500" />
+            <center>
+                <p:spacer></p:spacer>
+                <p:spacer></p:spacer>
+                <p:spacer></p:spacer>
+
+                <h:panelGrid columns="1" style="width: 400px">
+                    <h:outputLabel id="fechas" style="margin-left: 25px; color: black; font-size: 20px;" value="Fecha Actual: #{beanDetalleorden.fechaDesde}"></h:outputLabel>
+                    <h:panelGrid columns="2" style="width: 400px">
+                        <h:outputLabel id="codorden" style="margin-left: 25px; color: black; font-size: 20px;" value="Codigo de orden:"></h:outputLabel>
+                        <p:inputText value="#{beanDetalleorden.codigorden}" id="codordens"></p:inputText>
+                    </h:panelGrid>
+
+                    <p:dataTable  var="row" widgetVar="prov" emptyMessage="No se encontraron registros" style="margin-left: 0px; width: 800px; height: auto; text-align: center" paginatorPosition="top"  rows="4"
+                                  tableStyle="table-layout: auto;" value="#{beanDetalleorden.listaproveedor}" rowKey="#{row.codigoproveedor}"  id="prov" 
+                                  selection="#{beanDetalleorden.selecionproveedor}" >
+
+                        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                        <p:column headerText="Nombre"   style="width: 300px; text-align: center"   id="nomprove" >
+                            #{row.nombreproveedor}
+                        </p:column>
+
+                        <p:column headerText="Telefono"   style="width: 300px; text-align: center"   id="telprove" >
+                            #{row.telefonoproveedor}
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGrid>     
+
+
+
+                <p:dataTable  var="row" widgetVar="conrut" emptyMessage="No se encontraron registros" style="margin-left: 0px; width: 800px; height: auto; text-align: center" paginatorPosition="top"  rows="4"
+                              tableStyle="table-layout: auto;" value="#{beanDetalleorden.listacarrito}" rowKey="#{row.codigo}"  id="conrut" 
+                              >
+
+                    <p:column headerText="Imagen"   style="width: 300px; text-align: center"   id="im">
+                        <img src="images/#{row.codigo}.jpg" width="100px" style=" border-radius: 150px; border-bottom: 20px solid appworkspace; " height="100px"/>
+
+                    </p:column>
+                    <p:column headerText="Producto"   style="width: 300px; text-align: center"   id="product" >
+                        #{row.descripcion}
+                    </p:column>
+
+                    <p:column headerText="Cantidad"   style="width: 300px; text-align: center"   id="cant" >
+                        #{row.cantcompr}
+                    </p:column>
+
+                    <p:column headerText="Precio"   style="width: 300px; text-align: center"   id="prec" >
+                        #{row.precio}
+                    </p:column>
+                    <p:column headerText="Total"   style="width: 300px; text-align: center"   id="subto" >
+                        #{row.subtotl}
+                    </p:column>
+                    <p:column style=" width: 100px" headerText="Eliminar">
+                        <p:commandButton id="eliminus"  icon="ui-icon-trash"   >
+                            <f:setPropertyActionListener value="#{row}" target="#{beanDetalleorden.eliminaproduct}" />
+                        </p:commandButton> 
+
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:spacer></p:spacer>
+                <h:panelGrid columns="2" style="width: 500px">
+                    <h:outputLabel id="totpiz" style="margin-left: 25px; color: black; font-size: 20px;" value="Total de piezas: #{beanDetalleorden.cantidadtotal}"></h:outputLabel>
+                    <h:outputLabel id="totpre" style="margin-left: 25px; color: black; font-size: 20px;" value="Precio Total: Q.#{beanDetalleorden.preciototal}"></h:outputLabel>
+
+
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="width: 800px">
+                    <h:outputLabel style="margin-left: 25px; color: black; font-size: 15px;" value="Forma de pago:"></h:outputLabel>
+
+                    <h:panelGrid columns="3" style="width: 500px">
+                        <p:selectBooleanCheckbox  id="debit" itemLabel="Tarjeta de debito" value="#{beanDetalleorden.tarjetdebi}" disabled="#{beanDetalleorden.bloqueadebit}">
+                            <p:ajax update="growl" listener="#{beanDetalleorden.bloqueaforma}"></p:ajax>
+                        </p:selectBooleanCheckbox>
+                        <p:selectBooleanCheckbox id="credit"  itemLabel="Tarjeta de credito" value="#{beanDetalleorden.tarjetcredit}" disabled="#{beanDetalleorden.bloqueacredit}">  
+                            <p:ajax update="growl" listener="#{beanDetalleorden.bloqueaforma}"></p:ajax>
+                        </p:selectBooleanCheckbox>
+
+                        <p:selectBooleanCheckbox id="efec"  itemLabel="Efectivo contra entrega" value="#{beanDetalleorden.efectivocontra}" disabled="#{beanDetalleorden.bloqueaefect}">   
+                            <p:ajax update="growl" listener="#{beanDetalleorden.bloqueaforma}"></p:ajax>
+                        </p:selectBooleanCheckbox>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:panelGrid columns="2" style="width: 400px">
+                    <p:commandButton value="Pagar"  id="pagass"  style="margin-left: 10px; float: right" icon="ui-icon-clipboard" update="growl" actionListener="#{beanDetalleorden.pagarproducto}"  />
+                    <p:commandButton value="Vaciar carrito"  id="vacia" actionListener="#{beanDetalleorden.limpiarcarrito}" update="growl"  style="margin-left: 10px; float: right" icon="ui-icon-cart"   />
+                </h:panelGrid>
+
+
+            </center>
+
+
+        </h:form>
+
+
+    </h:body>
+</html>
+

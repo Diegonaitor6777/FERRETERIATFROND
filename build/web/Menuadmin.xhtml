@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Menu Administrador</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <h:outputStylesheet library="css" name="sweetalert.css"/>
+        <h:outputScript library="js" name="sweetalert.min.js"/>
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+
+        <div class="card">
+            <h:form>
+                <p:growl id="messages"/>
+
+                <p:menubar>
+                    <p:menuitem value="Productos" icon=" ui-icon-contact" url="ProductoCompra.xhtml"/>
+                    <p:menuitem value="Ordenes de compra" icon="ui-icon-suitcase" url="Detalleorden.xhtml"/>
+                    <p:menuitem value="Cerrar sesion" icon="ui-icon-locked" actionListener="#{beanlogin.cerrarsesion}"/>
+                </p:menubar>
+
+
+
+
+
+
+            </h:form>
+        </div>
+
+
+    </h:body>
+</html>
+

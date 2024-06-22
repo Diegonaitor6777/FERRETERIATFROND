@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Menu clientes</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <h:outputStylesheet library="css" name="sweetalert.css"/>
+        <h:outputScript library="js" name="sweetalert.min.js"/>
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+
+        <div class="card">
+            <h:form>
+                <p:growl id="messages"/>
+
+                <p:menubar>
+                    <p:submenu label="Materiales ferreteria" icon="ui-icon-wrench">
+                        <p:menuitem value="Herramientas" icon=" ui-icon-gear" url="Listaherramienta.xhtml"/>
+                        <p:menuitem value="Ferreteria y cerrajeria" icon="ui-icon-locked" url="Ferreteria.xhtml"/>
+                        <p:menuitem value="Materiales de construccion" icon=" ui-icon-alert" url="MaterialesConstruc.xhtml"/>       
+                    </p:submenu>
+
+                    <p:submenu label="Materiales domesticos" icon="ui-icon-person">
+                        <p:menuitem value="Iluminacion y electricidad" icon="ui-icon-lightbulb" url="Iluminacion.xhtml"/>
+                        <p:menuitem value="Fontaneria" icon="ui-icon-wrench" url="Fontaneria.xhtml"/>
+                        <p:menuitem value="Baños" icon="ui-icon-contact" url="Banios.xhtml"/>
+                        <p:menuitem value="Electrodomesticos" icon="ui-icon-lightbulb" url="Electrodomesticos.xhtml"/>
+                        <p:menuitem value="Muebles" icon=" ui-icon-image" url="Muebles.xhtml"/>
+                    </p:submenu>
+                    <p:menuitem value="Jardineria" icon="ui-icon-circle-triangle-n" url="Jardineria.xhtml"/>
+                    <p:menuitem value="Automotriz" icon="ui-icon-suitcase" url="Automotriz.xhtml"/>
+                    <p:menuitem value="Pintura" icon=" ui-icon-home" url="Pintura.xhtml"/>
+                    <p:menuitem value="Carrito de compras" icon="ui-icon-cart" url="CarritoCompra.xhtml"/>
+                    <p:menuitem value="Cerrar sesion" icon="ui-icon-locked" actionListener="#{beanlogin.cerrarsesion}"/>
+                </p:menubar>
+
+
+
+
+
+
+            </h:form>
+        </div>
+
+
+    </h:body>
+</html>
+

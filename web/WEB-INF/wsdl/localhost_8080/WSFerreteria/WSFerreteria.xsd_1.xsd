@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://servicio.ferreteria.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://servicio.ferreteria.com/">
+
+<xs:element name="Agregaventa" type="tns:Agregaventa"/>
+
+<xs:element name="AgregaventaResponse" type="tns:AgregaventaResponse"/>
+
+<xs:element name="Listaproveedor" type="tns:Listaproveedor"/>
+
+<xs:element name="ListaproveedorResponse" type="tns:ListaproveedorResponse"/>
+
+<xs:element name="Ordencompr" type="tns:Ordencompr"/>
+
+<xs:element name="OrdencomprResponse" type="tns:OrdencomprResponse"/>
+
+<xs:element name="Productoinventario" type="tns:Productoinventario"/>
+
+<xs:element name="ProductoinventarioResponse" type="tns:ProductoinventarioResponse"/>
+
+<xs:element name="formapagos" type="tns:formapagos"/>
+
+<xs:element name="formapagosResponse" type="tns:formapagosResponse"/>
+
+<xs:element name="ingreso" type="tns:ingreso"/>
+
+<xs:element name="ingresoResponse" type="tns:ingresoResponse"/>
+
+<xs:element name="listaProductos" type="tns:listaProductos"/>
+
+<xs:element name="listaProductosResponse" type="tns:listaProductosResponse"/>
+
+<xs:complexType name="Agregaventa">
+<xs:sequence>
+<xs:element name="totalprecio" type="xs:string" minOccurs="0"/>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="producto" type="tns:producto" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="formapago" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="producto">
+<xs:sequence>
+<xs:element name="cantcompr" type="xs:string" minOccurs="0"/>
+<xs:element name="codigo" type="xs:string" minOccurs="0"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="existencia" type="xs:string" minOccurs="0"/>
+<xs:element name="precio" type="xs:string" minOccurs="0"/>
+<xs:element name="productodetalle" type="xs:string" minOccurs="0"/>
+<xs:element name="status" type="xs:string" minOccurs="0"/>
+<xs:element name="subtotl" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="AgregaventaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Productoinventario">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="ProductoinventarioResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:producto" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Ordencompr">
+<xs:sequence>
+<xs:element name="codorden" type="xs:string" minOccurs="0"/>
+<xs:element name="codusuario" type="xs:string" minOccurs="0"/>
+<xs:element name="fecha" type="xs:string" minOccurs="0"/>
+<xs:element name="totpago" type="xs:string" minOccurs="0"/>
+<xs:element name="codproveedor" type="xs:string" minOccurs="0"/>
+<xs:element name="codpago" type="xs:string" minOccurs="0"/>
+<xs:element name="tipproduc" type="tns:producto" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="cantcompr" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="OrdencomprResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaProductos">
+<xs:sequence>
+<xs:element name="categoria" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaProductosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:producto" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="formapagos">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="formapagosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:formaPago" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="formaPago">
+<xs:sequence>
+<xs:element name="codpago" type="xs:string" minOccurs="0"/>
+<xs:element name="nompago" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Listaproveedor">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="ListaproveedorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:proveedores" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="proveedores">
+<xs:sequence>
+<xs:element name="codigoproveedor" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreproveedor" type="xs:string" minOccurs="0"/>
+<xs:element name="telefonoproveedor" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ingreso">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ingresoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Carrito compra</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <h:outputStylesheet library="css" name="sweetalert.css"/>
+        <h:outputScript library="js" name="sweetalert.min.js"/>
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+        <h:form>
+            <p:growl id="messages"/>
+            <p:menubar>
+                <p:submenu label="Materiales ferreteria" icon="ui-icon-wrench">
+                    <p:menuitem value="Herramientas" icon=" ui-icon-gear" url="Listaherramienta.xhtml"/>
+                    <p:menuitem value="Ferreteria y cerrajeria" icon="ui-icon-locked" url="Ferreteria.xhtml"/>
+                    <p:menuitem value="Materiales de construccion" icon=" ui-icon-alert" url="MaterialesConstruc.xhtml"/>       
+                </p:submenu>
+
+                <p:submenu label="Materiales domesticos" icon="ui-icon-person">
+                    <p:menuitem value="Iluminacion y electricidad" icon="ui-icon-lightbulb" url="Iluminacion.xhtml"/>
+                    <p:menuitem value="Fontaneria" icon="ui-icon-wrench" url="Fontaneria.xhtml"/>
+                    <p:menuitem value="Baños" icon="ui-icon-contact" url="Banios.xhtml"/>
+                    <p:menuitem value="Electrodomesticos" icon="ui-icon-lightbulb" url="Electrodomesticos.xhtml"/>
+                    <p:menuitem value="Muebles" icon=" ui-icon-image" url="Muebles.xhtml"/>
+                </p:submenu>
+                <p:menuitem value="Jardineria" icon="ui-icon-circle-triangle-n" url="Jardineria.xhtml"/>
+                <p:menuitem value="Automotriz" icon="ui-icon-suitcase" url="Automotriz.xhtml"/>
+                <p:menuitem value="Pintura" icon=" ui-icon-home" url="Pintura.xhtml"/>
+                <p:menuitem value="Carrito de compras" icon="ui-icon-cart" url="CarritoCompra.xhtml"/>
+                <p:menuitem value="Cerrar sesion" icon="ui-icon-locked" actionListener="#{beanlogin.cerrarsesion}"/>
+            </p:menubar>
+
+        </h:form>
+
+        <h:form id="piform">
+            <p:growl id="growl" showDetail="true" life="4500" />
+            <center>
+                <p:spacer></p:spacer>
+                <p:spacer></p:spacer>
+                <p:spacer></p:spacer>
+
+                <p:dataTable  var="row" widgetVar="conrut" emptyMessage="No se encontraron registros" style="margin-left: 0px; width: 800px; height: auto; text-align: center" paginatorPosition="top"  rows="4"
+                              tableStyle="table-layout: auto;" value="#{beancarrit.listacarrito}" rowKey="#{row.codigo}"  id="conrut" 
+                              >
+
+                    <p:column headerText="Imagen"   style="width: 300px; text-align: center"   id="im">
+                        <img src="images/#{row.codigo}.jpg" width="100px" style=" border-radius: 150px; border-bottom: 20px solid appworkspace; " height="100px"/>
+
+                    </p:column>
+                    <p:column headerText="Producto"   style="width: 300px; text-align: center"   id="product" >
+                        #{row.descripcion}
+                    </p:column>
+
+                    <p:column headerText="Cantidad"   style="width: 300px; text-align: center"   id="cant" >
+                        #{row.cantcompr}
+                    </p:column>
+
+                    <p:column headerText="Precio"   style="width: 300px; text-align: center"   id="prec" >
+                        #{row.precio}
+                    </p:column>
+                    <p:column headerText="Total"   style="width: 300px; text-align: center"   id="subto" >
+                        #{row.subtotl}
+                    </p:column>
+                    <p:column style=" width: 100px" headerText="Eliminar">
+                        <p:commandButton id="eliminus"  icon="ui-icon-trash"   >
+                            <f:setPropertyActionListener value="#{row}" target="#{beancarrit.eliminaproduct}" />
+                        </p:commandButton> 
+
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:spacer></p:spacer>
+                <h:panelGrid columns="2" style="width: 500px">
+                    <h:outputLabel id="totpiz" style="margin-left: 25px; color: black; font-size: 20px;" value="Total de piezas: #{beancarrit.cantidadtotal}"></h:outputLabel>
+                    <h:outputLabel id="totpre" style="margin-left: 25px; color: black; font-size: 20px;" value="Precio Total: Q.#{beancarrit.preciototal}"></h:outputLabel>
+
+
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="width: 800px">
+                    <h:outputLabel style="margin-left: 25px; color: black; font-size: 15px;" value="Forma de pago:"></h:outputLabel>
+
+                    <h:panelGrid columns="3" style="width: 500px">
+                        <p:selectBooleanCheckbox  id="debit" itemLabel="Tarjeta de debito" value="#{beancarrit.tarjetdebi}" disabled="#{beancarrit.bloqueadebit}">
+                            <p:ajax update="growl" listener="#{beancarrit.bloqueaforma}"></p:ajax>
+                        </p:selectBooleanCheckbox>
+                        <p:selectBooleanCheckbox id="credit"  itemLabel="Tarjeta de credito" value="#{beancarrit.tarjetcredit}" disabled="#{beancarrit.bloqueacredit}">  
+                            <p:ajax update="growl" listener="#{beancarrit.bloqueaforma}"></p:ajax>
+                        </p:selectBooleanCheckbox>
+
+                        <p:selectBooleanCheckbox id="efec"  itemLabel="Efectivo contra entrega" value="#{beancarrit.efectivocontra}" disabled="#{beancarrit.bloqueaefect}">   
+                            <p:ajax update="growl" listener="#{beancarrit.bloqueaforma}"></p:ajax>
+                        </p:selectBooleanCheckbox>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:panelGrid columns="2" style="width: 400px">
+                    <p:commandButton value="Pagar"  id="pagass"  style="margin-left: 10px; float: right" icon="ui-icon-clipboard" update="growl" actionListener="#{beancarrit.pagarproducto}"  />
+                    <p:commandButton value="Vaciar carrito"  id="vacia" actionListener="#{beancarrit.limpiarcarrito}" update="growl"  style="margin-left: 10px; float: right" icon="ui-icon-cart"   />
+                </h:panelGrid>
+
+
+            </center>
+
+
+        </h:form>
+    </h:body>
+</html>
+
